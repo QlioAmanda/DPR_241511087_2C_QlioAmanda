@@ -10,7 +10,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #06b6d4, #7c3aed);
+      background: linear-gradient(135deg, #61e7ffff, #2268ebff);
     }
     .card {
       border: none;

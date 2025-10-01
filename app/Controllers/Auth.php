@@ -6,17 +6,19 @@ class Auth extends BaseController
 {
     public function login()
     {
-        if (session()->get('user_id')) {
-            return redirect()->to('/dashboard');
+        // Kalau sudah login → jangan bisa akses login page lagi
+        if (session()->get('logged_in')) {
+            return redirect()->to('/');
         }
 
-        // ✅ login jangan pakai layout/main
-        return view('auth/login');
+        // login pakai layout auth (tanpa sidebar)
+        return view('layouts/auth', [
+            'page' => view('auth/login')
+        ]);
     }
 
     public function attempt()
     {
-        $session  = session();
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
@@ -24,25 +26,25 @@ class Auth extends BaseController
         $user = $userModel->where('username', $username)->first();
 
         if ($user && password_verify($password, $user['password'])) {
-            // set session
-            $session->set([
+            session()->set([
                 'user_id'   => $user['user_id'],
                 'username'  => $user['username'],
-                'role'      => $user['role'],
                 'full_name' => $user['full_name'],
+                'role'      => $user['role'],
                 'logged_in' => true
             ]);
 
-            return redirect()->to('/dashboard'); // ✅ redirect ke dashboard
-        } else {
-            $session->setFlashdata('error', 'Username atau password salah');
-            return redirect()->back();
+            return redirect()->to('/');
         }
+
+        // kalau gagal
+        session()->setFlashdata('error', '⚠️ Username atau password salah.');
+        return redirect()->back()->withInput();
     }
 
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/login'); 
+        return redirect()->to('/login');
     }
 }
