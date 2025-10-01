@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form KRS (Mission 4)</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h3>Form KRS Mahasiswa</h3>
+      <p>Pilih mata kuliah yang ingin diambil (bisa lebih dari satu):</p>
+
+      <form id="enroll-form">
+        <ul id="course-list"></ul>
+        <p id="total-sks"><strong>Total SKS:</strong> 0</p>
+        <button type="submit">Simpan KRS</button>
+        <div id="error-msg" style="color:red; margin-top:8px;"></div>
+      </form>
+    </div>
+
+    <div class="card mt-3">
+      <h4>KRS Tersimpan</h4>
+      <ul id="saved-krs"></ul>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
