@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login Sistem Akademik</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>APLIKASI GAJI DPR</title> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #61e7ffff, #2268ebff);
+      background: linear-gradient(135deg, #06b6d4, #7c3aed);
     }
     .card {
       border: none;
@@ -36,7 +35,7 @@
       <div class="col-md-6 col-lg-4">
         <div class="card shadow-lg p-4">
           <div class="text-center mb-4">
-            <h3 class="card-title">🔑 Login Sistem Akademik</h3>
+            <h3 class="card-title">APLIKASI GAJI DPR</h3> <p class="text-muted small mb-0">🔑 Silakan login untuk melanjutkan</p>
           </div>
           <?php if (session()->getFlashdata('error')): ?>
             <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
@@ -56,10 +55,9 @@
           </form>
           <hr>
           <p class="text-muted small text-center mb-0">
-            <strong>Demo:</strong><br>
+            <strong>Demo Akun:</strong><br>
             Admin: <code>admin / admin123</code><br>
-            Student: <code>student1 / student123</code>
-          </p>
+            Public: <code>citizen / public123</code> </p>
         </div>
       </div>
     </div>
