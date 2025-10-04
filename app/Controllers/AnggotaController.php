@@ -3,9 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\AnggotaModel;
-use CodeIgniter\Controller;
 
-class AnggotaController extends Controller
+class AnggotaController extends BaseController
 {
     protected $anggotaModel;
 
@@ -16,7 +15,15 @@ class AnggotaController extends Controller
 
     public function index()
     {
-        $data['anggota'] = $this->anggotaModel->findAll();
+        $keyword = $this->request->getGet('keyword');
+        
+        if ($keyword) {
+            $data['anggota'] = $this->anggotaModel->search($keyword);
+        } else {
+            $data['anggota'] = $this->anggotaModel->findAll();
+        }
+        
+        // PASTIKAN BARIS INI MEMUAT VIEW 'anggota/index'
         return view('anggota/index', $data);
     }
 
@@ -27,15 +34,8 @@ class AnggotaController extends Controller
 
     public function store()
     {
-        $this->anggotaModel->save([
-            'nama_depan'       => $this->request->getPost('nama_depan'),
-            'nama_belakang'    => $this->request->getPost('nama_belakang'),
-            'gelar_depan'      => $this->request->getPost('gelar_depan'),
-            'gelar_belakang'   => $this->request->getPost('gelar_belakang'),
-            'jabatan'          => $this->request->getPost('jabatan'),
-            'status_pernikahan'=> $this->request->getPost('status_pernikahan'),
-        ]);
-        return redirect()->to('/admin/anggota')->with('success', 'Data anggota berhasil ditambahkan');
+        $this->anggotaModel->save($this->request->getPost());
+        return redirect()->to('/admin/anggota')->with('success', 'Data anggota berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -46,19 +46,13 @@ class AnggotaController extends Controller
 
     public function update($id)
     {
-        $this->anggotaModel->update($id, [
-            'nama_depan'       => $this->request->getPost('nama_depan'),
-            'nama_belakang'    => $this->request->getPost('nama_belakang'),
-            'gelar_depan'      => $this->request->getPost('gelar_depan'),
-            'gelar_belakang'   => $this->request->getPost('gelar_belakang'),
-            'jabatan'          => $this->request->getPost('jabatan'),
-            'status_pernikahan'=> $this->request->getPost('status_pernikahan'),
-        ]);
-        return redirect()->to('/admin/anggota')->with('success', 'Data anggota berhasil diperbarui');
+        $this->anggotaModel->update($id, $this->request->getPost());
+        return redirect()->to('/admin/anggota')->with('success', 'Data anggota berhasil diperbarui.');
     }
 
     public function delete($id)
     {
-
+        $this->anggotaModel->delete($id);
+        return redirect()->to('/admin/anggota')->with('success', 'Data anggota berhasil dihapus.');
     }
 }
