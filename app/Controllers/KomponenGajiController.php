@@ -53,10 +53,12 @@ class KomponenGajiController extends BaseController
         return redirect()->to('/admin/komponengaji')->with('success', 'Komponen gaji berhasil diperbarui.');
     }
 
-    // Menghapus data
     public function delete($id)
     {
+        // Gunakan fungsi delete() bawaan dari Model
         $this->komponenGajiModel->delete($id);
+        
+        // Kembalikan ke halaman daftar dengan pesan sukses
         return redirect()->to('/admin/komponengaji')->with('success', 'Komponen gaji berhasil dihapus.');
     }
 }
