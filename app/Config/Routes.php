@@ -43,4 +43,6 @@ $routes->group('admin', ['filter' => ['auth', 'role']], function($routes) {
     $routes->get('penggajian', 'PenggajianController::index');
     // Nanti rute detail, tambah, hapus penggajian juga diletakkan di sini
     $routes->get('penggajian/detail/(:num)', 'PenggajianController::detail/$1');
+    $routes->post('penggajian/add/(:num)', 'PenggajianController::addKomponen/$1');
+    $routes->get('penggajian/remove/(:num)/(:num)', 'PenggajianController::removeKomponen/$1/$2');
 });

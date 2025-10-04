@@ -4,7 +4,6 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Data Penggajian Anggota (Bulanan)</h3>
-        <!-- Nanti bisa ditambahkan tombol seperti "Tambah Penggajian" jika perlu -->
     </div>
 
     <!-- Notifikasi -->
@@ -35,10 +34,9 @@
                             <td>Rp <?= number_format($item['take_home_pay'] ?? 0, 0, ',', '.') ?></td>
                             <td class="text-center">
                                 <!-- ========================================================== -->
-                                <!-- ===== PERUBAHAN ADA DI BARIS DI BAWAH INI ===== -->
+                                <!-- ===== PERUBAHAN UTAMA DI SINI: Tombol diaktifkan ===== -->
                                 <!-- ========================================================== -->
-                                <a href="/admin/penggajian/detail/<?= $item['id_anggota'] ?>" class="btn btn-sm btn-info">Detail</a>
-                                <a href="#" class="btn btn-sm btn-warning disabled">Kelola</a>
+                                <a href="/admin/penggajian/detail/<?= $item['id_anggota'] ?>" class="btn btn-sm btn-warning">Kelola Gaji</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
