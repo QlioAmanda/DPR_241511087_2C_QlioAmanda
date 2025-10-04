@@ -18,8 +18,8 @@ class Filters extends BaseConfig
         'secureheaders'=> \CodeIgniter\Filters\SecureHeaders::class,
 
         // 🔹 custom filters
-        'auth' => \App\Filters\AuthFilter::class,
-        'role' => \App\Filters\RoleFilter::class,
+        'auth' => \App\Filters\AuthFilter::class, // Filter untuk mengecek autentikasi
+        'role' => \App\Filters\RoleFilter::class, // Filter untuk pengecekan role
     ];
 
     /**
@@ -28,8 +28,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
-            // 'csrf',
-            // jangan taruh 'auth' atau 'role' di sini → cukup dipanggil di Routes.php
+            // Jangan taruh filter 'auth' di sini, karena kita hanya ingin mengaplikasikannya pada rute tertentu (admin/*)
         ],
         'after' => [
             'toolbar',
@@ -49,7 +48,7 @@ class Filters extends BaseConfig
      * before or after URI patterns.
      */
     public array $filters = [
-        // contoh kalau mau proteksi global:
-        // 'auth' => ['before' => ['*', '!login*', '!public/*']],
+        'auth' => ['before' => ['admin/*']], // Terapkan filter 'auth' hanya untuk rute 'admin/*'
+        'role' => ['before' => ['admin/*']], // Bisa juga tambahkan role check di rute admin
     ];
 }

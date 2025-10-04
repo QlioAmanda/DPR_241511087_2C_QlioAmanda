@@ -1,4 +1,6 @@
-<?php namespace App\Filters;
+<?php
+
+namespace App\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -8,14 +10,13 @@ class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Cek apakah user sudah login
-        if (! session()->get('user_id')) {
-            return redirect()->to('/login')->with('error', 'Silakan login terlebih dahulu.');
+        if (! session()->get('logged_in')) {
+            return redirect()->to('/');
         }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // Tidak ada proses khusus setelah request
+        // kosong
     }
 }

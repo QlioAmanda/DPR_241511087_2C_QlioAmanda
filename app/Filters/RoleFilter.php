@@ -1,4 +1,6 @@
-<?php namespace App\Filters;
+<?php
+
+namespace App\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -8,17 +10,13 @@ class RoleFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $requiredRole = $arguments[0] ?? null;
-        $currentRole  = session()->get('role');
-
-        // Jika role tidak sesuai → lempar ke forbidden
-        if ($requiredRole && $currentRole !== $requiredRole) {
-            return redirect()->to('/forbidden')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/dashboard');
         }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // Tidak ada proses khusus setelah request
+        // kosong
     }
 }

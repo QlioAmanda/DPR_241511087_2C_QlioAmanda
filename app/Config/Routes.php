@@ -3,58 +3,22 @@
 namespace Config;
 
 use CodeIgniter\Router\RouteCollection;
-use Config\Services;
 
-/** @var RouteCollection $routes */
-$routes = Services::routes();
-
-if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
-    require SYSTEMPATH . 'Config/Routes.php';
-}
-
-/*
- * Router Setup
- */
-$routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
-$routes->setDefaultMethod('index');
-$routes->setTranslateURIDashes(false);
-$routes->set404Override();
-$routes->setAutoRoute(false); // Pastikan ini 'false' agar rute aman
-
-/*
- * Route Definitions
+/**
+ * @var RouteCollection $routes
  */
 
-// Home (hanya dashboard)
-$routes->get('/', 'Home::index');
-$routes->get('/dashboard', 'Home::index'); 
+$routes->get('/', 'AuthController::login');
+$routes->post('/login', 'AuthController::attemptLogin');
+$routes->get('/logout', 'AuthController::logout');
 
-// Auth (login & logout)
-$routes->get('/login', 'Auth::login');
-$routes->post('/login/attempt', 'Auth::attempt');
-$routes->get('/logout', 'Auth::logout');
+$routes->get('/dashboard', 'DashboardController::index', ['filter' => 'auth']);
 
-// Rute yang memerlukan autentikasi (filter 'auth' harus didefinisikan)
-$routes->group('/', ['filter' => 'auth'], function ($routes) {
-    // KELOLA DATA ANGGOTA DPR (Hanya untuk Admin)
-    $routes->group('anggota_dpr', function ($routes) {
-        $routes->get('/', 'AnggotaDPR::index');
-        $routes->get('tambah', 'AnggotaDPR::create'); // Form tambah
-        $routes->post('simpan', 'AnggotaDPR::store'); // Proses simpan
-        $routes->get('ubah/(:num)', 'AnggotaDPR::edit/$1'); // Form ubah
-        $routes->post('update/(:num)', 'AnggotaDPR::update/$1'); // Proses update
-        $routes->get('hapus/(:num)', 'AnggotaDPR::delete/$1'); // Proses hapus
-    });
-    
-    // KELOLA DATA KOMPONEN GAJI (Akan datang)
-    // KELOLA DATA PENGGAJIAN (Akan datang)
+$routes->group('admin', ['filter' => ['auth', 'role']], function($routes) {
+    $routes->get('anggota', 'AnggotaController::index');
+    $routes->get('anggota/create', 'AnggotaController::create');
+    $routes->post('anggota/store', 'AnggotaController::store');
+    $routes->get('anggota/edit/(:num)', 'AnggotaController::edit/$1');
+    $routes->post('anggota/update/(:num)', 'AnggotaController::update/$1');
+    $routes->get('anggota/delete/(:num)', 'AnggotaController::delete/$1');
 });
-
-/*
- * Additional Routing
- * Environment based
- */
-if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
-    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
-}

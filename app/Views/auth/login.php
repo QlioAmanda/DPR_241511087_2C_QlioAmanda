@@ -1,66 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>APLIKASI GAJI DPR</title> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Aplikasi DPR</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      min-height: 100vh;
+      background: #dc3545; /* merah */
+    }
+    .login-container {
+      height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #06b6d4, #7c3aed);
+      align-items: center;
     }
-    .card {
-      border: none;
+    .login-box {
+      background: #fff; /* putih */
+      padding: 2rem;
       border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
     }
-    .card-title {
+    .title {
+      text-align: center;
       font-weight: bold;
-      color: #333;
+      font-size: 1.1rem;
+      color: #000; /* hitam */
+      margin-bottom: 1.5rem;
+      border-bottom: 3px solid #dc3545; /* aksen merah */
+      padding-bottom: 0.5rem;
     }
-    .btn-primary {
-      background: linear-gradient(90deg,#7c3aed,#06b6d4);
+    .btn-custom {
+      background-color: #000; /* hitam */
       border: none;
+      color: #fff; /* putih */
       font-weight: bold;
     }
-    .btn-primary:hover {
-      opacity: 0.9;
+    .btn-custom:hover {
+      background-color: #dc3545; /* merah saat hover */
+      color: #fff;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg p-4">
-          <div class="text-center mb-4">
-            <h3 class="card-title">APLIKASI GAJI DPR</h3> <p class="text-muted small mb-0">🔑 Silakan login untuk melanjutkan</p>
-          </div>
-          <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
-          <?php endif; ?>
-          <form action="<?= base_url('/login/attempt') ?>" method="post">
-            <div class="mb-3">
-              <label class="form-label">Username</label>
-              <input name="username" class="form-control" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Password</label>
-              <input type="password" name="password" class="form-control" required>
-            </div>
-            <div class="d-grid">
-              <button class="btn btn-primary">Masuk</button>
-            </div>
-          </form>
-          <hr>
-          <p class="text-muted small text-center mb-0">
-            <strong>Demo Akun:</strong><br>
-            Admin: <code>admin / admin123</code><br>
-            Public: <code>citizen / public123</code> </p>
+
+  <div class="container login-container">
+    <div class="login-box">
+      <h2 class="title">
+        APLIKASI PENGHITUNGAN & TRANSPARANSI GAJI DPR BERBASIS WEB
+      </h2>
+
+      <!-- Form Login -->
+      <form action="<?= base_url('/login') ?>" method="post">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" name="username" id="username" class="form-control" required>
         </div>
-      </div>
+        
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-custom w-100">Login</button>
+      </form>
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
