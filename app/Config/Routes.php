@@ -10,7 +10,7 @@ use CodeIgniter\Router\RouteCollection;
 
 // Rute untuk Otentikasi (Login/Logout)
 $routes->get('/', 'AuthController::login');
-$routes->get('login', 'AuthController::login'); // Alias untuk login
+$routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::attemptLogin');
 $routes->get('logout', 'AuthController::logout');
 
@@ -37,11 +37,8 @@ $routes->group('admin', ['filter' => ['auth', 'role']], function($routes) {
     $routes->post('komponengaji/update/(:num)', 'KomponenGajiController::update/$1');
     $routes->get('komponengaji/delete/(:num)', 'KomponenGajiController::delete/$1');
 
-    // ==========================================================
-    // ===== SIMPAN RUTE PENGGAJIAN ADMIN DI SINI =====
-    // ==========================================================
+    // Rute untuk Penggajian Admin
     $routes->get('penggajian', 'PenggajianController::index');
-    // Nanti rute detail, tambah, hapus penggajian juga diletakkan di sini
     $routes->get('penggajian/detail/(:num)', 'PenggajianController::detail/$1');
     $routes->post('penggajian/add/(:num)', 'PenggajianController::addKomponen/$1');
     $routes->get('penggajian/remove/(:num)/(:num)', 'PenggajianController::removeKomponen/$1/$2');

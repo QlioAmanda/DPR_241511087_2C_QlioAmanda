@@ -2,46 +2,60 @@
 
 namespace App\Controllers;
 
-use App\Models\PenggajianModel;
 use App\Models\AnggotaModel;
-use App\Models\KomponenGajiModel; // <-- Tambahkan ini
+use App\Models\KomponenGajiModel;
+use App\Models\PenggajianModel;
 
 class PenggajianController extends BaseController
 {
-    protected $penggajianModel;
     protected $anggotaModel;
-    protected $komponenGajiModel; // <-- Tambahkan ini
+    protected $komponenGajiModel;
+    protected $penggajianModel;
 
     public function __construct()
     {
-        $this->penggajianModel = new PenggajianModel();
         $this->anggotaModel = new AnggotaModel();
-        $this->komponenGajiModel = new KomponenGajiModel(); // <-- Tambahkan ini
+        $this->komponenGajiModel = new KomponenGajiModel();
+        $this->penggajianModel = new PenggajianModel();
     }
 
     public function index()
     {
-        $data['penggajian'] = $this->penggajianModel->getTakeHomePay();
+        $keyword = $this->request->getGet('keyword');
+        if ($keyword) {
+            $data['penggajian'] = $this->penggajianModel->searchTakeHomePay($keyword);
+            $data['keyword'] = $keyword;
+        } else {
+            $data['penggajian'] = $this->penggajianModel->getTakeHomePay();
+        }
+
         return view('penggajian/index', $data);
     }
 
+    /**
+     * ==========================================================
+     * ===== PASTIKAN FUNGSI INI MENGIRIM SEMUA DATA YANG BENAR =====
+     * ==========================================================
+     */
     public function detail($id_anggota)
     {
+        // 1. Dapatkan data anggota
         $anggota = $this->anggotaModel->find($id_anggota);
         if (!$anggota) {
             return redirect()->to('/admin/penggajian')->with('error', 'Data anggota tidak ditemukan.');
         }
 
+        // 2. Siapkan semua data yang dibutuhkan oleh view
         $data = [
             'anggota'           => $anggota,
             'komponen_dimiliki' => $this->penggajianModel->getDetailGaji($id_anggota),
             'komponen_tersedia' => $this->penggajianModel->getAvailableKomponen($anggota['jabatan'], $id_anggota),
         ];
 
+        // 3. Kirim semua data ke view 'penggajian/detail'
         return view('penggajian/detail', $data);
     }
 
-    // Fungsi untuk menambah komponen ke anggota
     public function addKomponen($id_anggota)
     {
         $id_komponen = $this->request->getPost('id_komponen_gaji');
@@ -56,7 +70,6 @@ class PenggajianController extends BaseController
         return redirect()->to('/admin/penggajian/detail/'.$id_anggota)->with('error', 'Gagal menambahkan komponen.');
     }
 
-    // Fungsi untuk menghapus komponen dari anggota
     public function removeKomponen($id_anggota, $id_komponen_gaji)
     {
         $this->penggajianModel->removeKomponen($id_anggota, $id_komponen_gaji);

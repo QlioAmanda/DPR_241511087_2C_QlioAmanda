@@ -1,5 +1,4 @@
 <?php
-// Cek jika variabel $hide_navbar dikirim dari view, jika tidak, set default false
 $hide_navbar = $hide_navbar ?? false;
 ?>
 <!DOCTYPE html>
@@ -17,10 +16,7 @@ $hide_navbar = $hide_navbar ?? false;
 </head>
 <body>
 
-<?php
-// Tampilkan navbar hanya jika $hide_navbar adalah false
-if (!$hide_navbar):
-?>
+<?php if (!$hide_navbar): ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container">
     <a class="navbar-brand" href="/">ETS-P3</a>
@@ -28,27 +24,18 @@ if (!$hide_navbar):
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <?php
-      // Tampilkan menu navigasi hanya jika pengguna sudah login
-      if (session()->get('logged_in')):
-      ?>
+      <?php if (session()->get('logged_in')): ?>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">Dashboard</a>
           </li>
-          <?php
-          // Logika untuk menampilkan menu berdasarkan ROLE
-          if (session()->get('role') === 'Admin'):
-          ?>
+          <?php if (session()->get('role') === 'Admin'): ?>
             <li class="nav-item">
               <a class="nav-link" href="/admin/anggota">Kelola Anggota</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/admin/komponengaji">Komponen Gaji</a>
             </li>
-            <!-- ======================================= -->
-            <!-- ===== LINK BARU UNTUK ADMIN ===== -->
-            <!-- ======================================= -->
             <li class="nav-item">
               <a class="nav-link" href="/admin/penggajian">Data Penggajian</a>
             </li>
@@ -56,23 +43,22 @@ if (!$hide_navbar):
              <li class="nav-item">
               <a class="nav-link" href="/anggota">Lihat Anggota</a>
             </li>
-             <!-- ======================================= -->
-             <!-- ===== LINK BARU UNTUK PUBLIK ===== -->
-             <!-- ======================================= -->
-            <li class="nav-item">
+             <li class="nav-item">
               <a class="nav-link" href="/penggajian">Lihat Penggajian</a>
             </li>
           <?php endif; ?>
         </ul>
         <ul class="navbar-nav">
-           <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Selamat Datang, <?= esc(session()->get('nama_depan')) ?>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="/logout">Logout</a></li>
-              </ul>
-            </li>
+           <li class="nav-item">
+                <span class="navbar-text text-white me-3">
+                    Selamat Datang, <?= esc(session()->get('nama_depan')) ?>
+                </span>
+           </li>
+           <li class="nav-item">
+                <a class="btn btn-outline-danger btn-sm" href="/logout" onclick="return confirm('Apakah Anda yakin ingin logout?')">
+                    Logout
+                </a>
+           </li>
         </ul>
       <?php endif; ?>
     </div>
@@ -84,12 +70,9 @@ if (!$hide_navbar):
     <?= $this->renderSection('content') ?>
 </main>
 
-<?php
-// Tampilkan footer hanya jika $hide_navbar adalah false
-if (!$hide_navbar):
-?>
+<?php if (!$hide_navbar): ?>
 <footer class="container mt-5 text-center text-muted">
-    <p>&copy; <?= date('Y') ?> Proyek ETS Pemrograman Lanjut</p>
+    <p>&copy; <?= date('Y') ?> ETS Proyek 3</p>
 </footer>
 <?php endif; ?>
 
