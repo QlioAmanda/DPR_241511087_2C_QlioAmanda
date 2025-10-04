@@ -22,6 +22,15 @@ class PublicController extends BaseController
         return view('public/anggota', $data);
     }
     
-    // Anda bisa tambahkan fungsi lain untuk halaman publik di sini nanti
-    // misalnya public/penggajian
+    public function penggajian()
+    {
+        $penggajianModel = new PenggajianModel();
+        
+        $data['penggajian'] = $penggajianModel->getTakeHomePay();
+        
+        $data['title'] = 'Data Penggajian Anggota DPR';
+
+        // Tampilkan view khusus untuk publik
+        return view('public/penggajian', $data);
+    }
 }

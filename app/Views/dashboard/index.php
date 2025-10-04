@@ -9,7 +9,6 @@
     .card-custom {
       border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.2s;
-      height: 100%; /* Membuat tinggi kartu sama */
     }
     .card-custom:hover { transform: translateY(-5px); }
 </style>
@@ -20,6 +19,7 @@
     <p>APLIKASI PENGHITUNGAN & TRANSPARANSI GAJI DPR</p>
   </div>
 
+  <!-- Notifikasi -->
   <?php if(session()->getFlashdata('success')): ?>
     <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
   <?php endif; ?>
@@ -27,35 +27,58 @@
     <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
   <?php endif; ?>
 
+  <!-- Baris untuk semua kartu menu -->
   <div class="row">
+
+    <!-- Card 1: Data Anggota -->
     <div class="col-md-4 mb-4">
-      <div class="card card-custom">
+      <div class="card card-custom h-100">
         <div class="card-body text-center d-flex flex-column">
           <h4 class="card-title">Data Anggota</h4>
           <p class="card-text">Lihat atau kelola data anggota DPR.</p>
-          
-          <div class="mt-auto"> <?php if (session()->get('role') === 'Admin'): ?>
-              <a href="/admin/anggota" class="btn btn-primary">Kelola Data (Admin)</a>
+          <div class="mt-auto">
+            <?php if (session()->get('role') === 'Admin'): ?>
+              <a href="/admin/anggota" class="btn btn-primary">Kelola Data</a>
             <?php else: ?>
-              <a href="/anggota" class="btn btn-secondary">Lihat Data (Publik)</a>
+              <a href="/anggota" class="btn btn-secondary">Lihat Data</a>
             <?php endif; ?>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Card 2: Komponen Gaji (Hanya untuk Admin) -->
     <?php if (session()->get('role') === 'Admin'): ?>
     <div class="col-md-4 mb-4">
-      <div class="card card-custom">
+      <div class="card card-custom h-100">
         <div class="card-body text-center d-flex flex-column">
           <h4 class="card-title">Komponen Gaji</h4>
           <p class="card-text">Kelola semua komponen gaji dan tunjangan.</p>
-          <div class="mt-auto"> <a href="/admin/komponengaji" class="btn btn-primary">Kelola Komponen</a>
+          <div class="mt-auto">
+            <a href="/admin/komponengaji" class="btn btn-primary">Kelola Komponen</a>
           </div>
         </div>
       </div>
     </div>
     <?php endif; ?>
+
+    <!-- Card 3: Data Penggajian -->
+    <div class="col-md-4 mb-4">
+      <div class="card card-custom h-100">
+        <div class="card-body text-center d-flex flex-column">
+          <h4 class="card-title">Data Penggajian</h4>
+          <p class="card-text">Atur atau lihat rincian penggajian anggota.</p>
+          <div class="mt-auto">
+            <?php if (session()->get('role') === 'Admin'): ?>
+              <a href="/admin/penggajian" class="btn btn-primary">Kelola Gaji</a>
+            <?php else: ?>
+              <a href="/penggajian" class="btn btn-secondary">Lihat Gaji</a>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
     </div>
+
+  </div> <!-- Penutup <div class="row"> -->
 </div>
 <?= $this->endSection() ?>

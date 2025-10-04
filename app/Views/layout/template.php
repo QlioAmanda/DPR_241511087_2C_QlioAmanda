@@ -46,9 +46,21 @@ if (!$hide_navbar):
             <li class="nav-item">
               <a class="nav-link" href="/admin/komponengaji">Komponen Gaji</a>
             </li>
-            <?php else: ?>
+            <!-- ======================================= -->
+            <!-- ===== LINK BARU UNTUK ADMIN ===== -->
+            <!-- ======================================= -->
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/penggajian">Data Penggajian</a>
+            </li>
+          <?php else: ?>
              <li class="nav-item">
               <a class="nav-link" href="/anggota">Lihat Anggota</a>
+            </li>
+             <!-- ======================================= -->
+             <!-- ===== LINK BARU UNTUK PUBLIK ===== -->
+             <!-- ======================================= -->
+            <li class="nav-item">
+              <a class="nav-link" href="/penggajian">Lihat Penggajian</a>
             </li>
           <?php endif; ?>
         </ul>

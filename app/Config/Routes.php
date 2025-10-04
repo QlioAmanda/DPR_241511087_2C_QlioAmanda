@@ -12,11 +12,12 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'AuthController::login');
 $routes->get('login', 'AuthController::login'); // Alias untuk login
 $routes->post('login', 'AuthController::attemptLogin');
-$routes->get('logout', 'AuthController::logout'); // <-- PASTIKAN BARIS INI ADA
+$routes->get('logout', 'AuthController::logout');
 
-// Rute setelah login
+// Rute setelah login (untuk semua role)
 $routes->get('dashboard', 'DashboardController::index', ['filter' => 'auth']);
 $routes->get('anggota', 'PublicController::anggota', ['filter' => 'auth']);
+$routes->get('penggajian', 'PublicController::penggajian', ['filter' => 'auth']);
 
 // Grup Rute KHUSUS ADMIN
 $routes->group('admin', ['filter' => ['auth', 'role']], function($routes) {
@@ -28,13 +29,17 @@ $routes->group('admin', ['filter' => ['auth', 'role']], function($routes) {
     $routes->post('anggota/update/(:num)', 'AnggotaController::update/$1');
     $routes->get('anggota/delete/(:num)', 'AnggotaController::delete/$1');
 
-    // ==========================================================
-    // ===== TAMBAHKAN BLOK RUTE DI BAWAH INI =====
-    // ==========================================================
+    // Rute untuk Komponen Gaji
     $routes->get('komponengaji', 'KomponenGajiController::index');
     $routes->get('komponengaji/create', 'KomponenGajiController::create');
     $routes->post('komponengaji/store', 'KomponenGajiController::store');
     $routes->get('komponengaji/edit/(:num)', 'KomponenGajiController::edit/$1');
     $routes->post('komponengaji/update/(:num)', 'KomponenGajiController::update/$1');
     $routes->get('komponengaji/delete/(:num)', 'KomponenGajiController::delete/$1');
+
+    // ==========================================================
+    // ===== SIMPAN RUTE PENGGAJIAN ADMIN DI SINI =====
+    // ==========================================================
+    $routes->get('penggajian', 'PenggajianController::index');
+    // Nanti rute detail, tambah, hapus penggajian juga diletakkan di sini
 });
