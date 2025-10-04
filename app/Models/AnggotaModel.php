@@ -16,4 +16,22 @@ class AnggotaModel extends Model
         'jabatan',
         'status_pernikahan',
     ];
+
+    /**
+     * Fungsi untuk mencari data anggota berdasarkan keyword.
+     * @param string $keyword
+     * @return array
+     */
+    // TAMBAHKAN ATAU PASTIKAN FUNGSI INI ADA
+    public function search($keyword)
+    {
+        // Mencari data berdasarkan keyword di beberapa kolom sekaligus
+        // menggunakan Query Builder
+        return $this->table('anggota')
+            ->like('nama_depan', $keyword)
+            ->orLike('nama_belakang', $keyword)
+            ->orLike('jabatan', $keyword)
+            ->orLike('id_anggota', $keyword)
+            ->get()->getResultArray();
+    }
 }
