@@ -7,14 +7,23 @@
 </head>
 <body>
   <div class="container mt-4">
-    <h3>Data Anggota DPR</h3>
+    <h2 class="mb-3">Data Anggota DPR</h2>
+
+    <!-- Tombol kembali ke Dashboard -->
+    <a href="<?= base_url('/dashboard') ?>" class="btn btn-danger mb-3">
+      ← Kembali ke Dashboard
+    </a>
+
+    <!-- Flash message -->
     <?php if(session()->getFlashdata('success')): ?>
       <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>
-    
+
+    <!-- Tombol tambah anggota -->
     <a href="/admin/anggota/create" class="btn btn-primary mb-3">+ Tambah Anggota</a>
 
-    <table class="table table-bordered">
+    <!-- Tabel Data Anggota -->
+    <table class="table table-striped table-bordered">
       <thead class="table-dark">
         <tr>
           <th>ID</th>
@@ -40,12 +49,14 @@
             <td><?= $row['status_pernikahan'] ?></td>
             <td>
               <a href="/admin/anggota/edit/<?= $row['id_anggota'] ?>" class="btn btn-sm btn-warning">Edit</a>
-              <a href="/admin/anggota/delete/<?= $row['id_anggota'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">Hapus</a>
+              <a href="/admin/anggota/delete/<?= $row['id_anggota'] ?>" 
+                 class="btn btn-sm btn-danger" 
+                 onclick="return confirm('Hapus data ini?')">Hapus</a>
             </td>
           </tr>
           <?php endforeach; ?>
         <?php else: ?>
-          <tr><td colspan="9" class="text-center">Belum ada data anggota.</td></tr>
+          <tr><td colspan="8" class="text-center">Belum ada data anggota.</td></tr>
         <?php endif; ?>
       </tbody>
     </table>
