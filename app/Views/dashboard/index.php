@@ -9,6 +9,7 @@
     .card-custom {
       border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.2s;
+      height: 100%; /* Membuat tinggi kartu sama */
     }
     .card-custom:hover { transform: translateY(-5px); }
 </style>
@@ -29,18 +30,32 @@
   <div class="row">
     <div class="col-md-4 mb-4">
       <div class="card card-custom">
-        <div class="card-body text-center">
+        <div class="card-body text-center d-flex flex-column">
           <h4 class="card-title">Data Anggota</h4>
           <p class="card-text">Lihat atau kelola data anggota DPR.</p>
           
-          <?php if (session()->get('role') === 'Admin'): ?>
-            <a href="/admin/anggota" class="btn btn-primary">Kelola Data (Admin)</a>
-          <?php else: ?>
-            <a href="/anggota" class="btn btn-secondary">Lihat Data (Publik)</a>
-          <?php endif; ?>
+          <div class="mt-auto"> <?php if (session()->get('role') === 'Admin'): ?>
+              <a href="/admin/anggota" class="btn btn-primary">Kelola Data (Admin)</a>
+            <?php else: ?>
+              <a href="/anggota" class="btn btn-secondary">Lihat Data (Publik)</a>
+            <?php endif; ?>
+          </div>
         </div>
       </div>
     </div>
+
+    <?php if (session()->get('role') === 'Admin'): ?>
+    <div class="col-md-4 mb-4">
+      <div class="card card-custom">
+        <div class="card-body text-center d-flex flex-column">
+          <h4 class="card-title">Komponen Gaji</h4>
+          <p class="card-text">Kelola semua komponen gaji dan tunjangan.</p>
+          <div class="mt-auto"> <a href="/admin/komponengaji" class="btn btn-primary">Kelola Komponen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php endif; ?>
     </div>
 </div>
 <?= $this->endSection() ?>

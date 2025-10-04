@@ -1,6 +1,6 @@
 <?php
 // Cek jika variabel $hide_navbar dikirim dari view, jika tidak, set default false
-$hide_navbar = $hide_navbar ?? false; 
+$hide_navbar = $hide_navbar ?? false;
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -17,9 +17,9 @@ $hide_navbar = $hide_navbar ?? false;
 </head>
 <body>
 
-<?php 
+<?php
 // Tampilkan navbar hanya jika $hide_navbar adalah false
-if (!$hide_navbar): 
+if (!$hide_navbar):
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container">
@@ -28,20 +28,23 @@ if (!$hide_navbar):
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <?php 
+      <?php
       // Tampilkan menu navigasi hanya jika pengguna sudah login
-      if (session()->get('logged_in')): 
+      if (session()->get('logged_in')):
       ?>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">Dashboard</a>
           </li>
-          <?php 
+          <?php
           // Logika untuk menampilkan menu berdasarkan ROLE
-          if (session()->get('role') === 'Admin'): 
+          if (session()->get('role') === 'Admin'):
           ?>
             <li class="nav-item">
               <a class="nav-link" href="/admin/anggota">Kelola Anggota</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/komponengaji">Komponen Gaji</a>
             </li>
             <?php else: ?>
              <li class="nav-item">
@@ -69,9 +72,9 @@ if (!$hide_navbar):
     <?= $this->renderSection('content') ?>
 </main>
 
-<?php 
+<?php
 // Tampilkan footer hanya jika $hide_navbar adalah false
-if (!$hide_navbar): 
+if (!$hide_navbar):
 ?>
 <footer class="container mt-5 text-center text-muted">
     <p>&copy; <?= date('Y') ?> Proyek ETS Pemrograman Lanjut</p>
