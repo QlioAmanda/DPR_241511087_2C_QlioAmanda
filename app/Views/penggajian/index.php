@@ -34,7 +34,10 @@
                             <td><?= esc($item['jabatan']) ?></td>
                             <td>Rp <?= number_format($item['take_home_pay'] ?? 0, 0, ',', '.') ?></td>
                             <td class="text-center">
-                                <a href="#" class="btn btn-sm btn-info disabled">Detail</a>
+                                <!-- ========================================================== -->
+                                <!-- ===== PERUBAHAN ADA DI BARIS DI BAWAH INI ===== -->
+                                <!-- ========================================================== -->
+                                <a href="/admin/penggajian/detail/<?= $item['id_anggota'] ?>" class="btn btn-sm btn-info">Detail</a>
                                 <a href="#" class="btn btn-sm btn-warning disabled">Kelola</a>
                             </td>
                         </tr>
